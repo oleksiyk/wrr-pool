@@ -86,7 +86,7 @@ it('update()', function () {
     });
 
     pool.update(function (v) { return v === 'B';}, 'B1', 4).should.be.eql(1);
-    pool.update(function (v) { return v === 'C';}, 'C1', 4).should.be.eql(0); // it was sorted
+    pool.update(function (v) { return v === 'C';}, 'C1', 4).should.be.eql(2);
 
     _(0).range(12).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
@@ -118,7 +118,7 @@ it('remove()', function () {
     pool.add('B', 3);
     pool.add('C', 2);
 
-    pool.remove(function (v) { return v === 'C';}).should.be.eql(0);
+    pool.remove(function (v) { return v === 'C';}).should.be.eql(2);
 
     _(0).range(7).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
