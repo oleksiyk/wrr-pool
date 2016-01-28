@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/oleksiyk/kafka.png)](https://travis-ci.org/oleksiyk/kafka)
+[![Build Status](https://travis-ci.org/oleksiyk/wrr-pool.png)](https://travis-ci.org/oleksiyk/wrr-pool)
 
 # WRRPool
 
