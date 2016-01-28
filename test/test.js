@@ -12,7 +12,7 @@ it('should return proper sequence', function () {
     pool.add('B', 3);
     pool.add('C', 2);
 
-    _(0).range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+    _().range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
         B: 3,
         C: 2
@@ -30,7 +30,7 @@ it('should work with single peer', function () {
 
     pool.add('A', 4);
 
-    _(0).range(12).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+    _().range(12).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 12
     });
 });
@@ -42,10 +42,36 @@ it('should work when peers have same weight', function () {
     pool.add('B', 4);
     pool.add('C', 4);
 
-    _(0).range(12).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+    _().range(12).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
         B: 4,
         C: 4
+    });
+});
+
+it('should exclude peer with weight = 0', function () {
+    var pool = new WRRPool();
+
+    pool.add('A', 4);
+    pool.add('B', 3);
+    pool.add('C', 0);
+
+    _().range(14).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+        A: 8,
+        B: 6
+    });
+});
+
+it('weight < 0 effectively means weight=0', function () {
+    var pool = new WRRPool();
+
+    pool.add('A', 4);
+    pool.add('B', 3);
+    pool.add('C', -2);
+
+    _().range(14).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+        A: 8,
+        B: 6
     });
 });
 
@@ -60,6 +86,18 @@ it('get()', function () {
         value: { id: 2 },
         weight: 3
     });
+});
+
+it('default weight is 10', function () {
+    var pool = new WRRPool();
+
+    pool.add({ id: 1 });
+    pool.add({ id: 2 }, 'x');
+    pool.add({ id: 3 }, {});
+
+    pool.get({ id: 1 }).should.have.property('weight', 10);
+    pool.get({ id: 2 }).should.have.property('weight', 10);
+    pool.get({ id: 3 }).should.have.property('weight', 10);
 });
 
 it('get() failed predicate returns undefined', function () {
@@ -79,7 +117,7 @@ it('update()', function () {
     pool.add('B', 3);
     pool.add('C', 2);
 
-    _(0).range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+    _().range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
         B: 3,
         C: 2
@@ -88,7 +126,7 @@ it('update()', function () {
     pool.update(function (v) { return v === 'B';}, 'B1', 4).should.be.eql(1);
     pool.update(function (v) { return v === 'C';}, 'C1', 4).should.be.eql(2);
 
-    _(0).range(12).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+    _().range(12).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
         B1: 4,
         C1: 4
@@ -104,7 +142,7 @@ it('update() failed predicate returns undefined', function () {
 
     expect(pool.update(function (v) { return v === 'D';}, 'B1', 100)).to.eql(undefined);
 
-    _(0).range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+    _().range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
         B: 3,
         C: 2
@@ -120,7 +158,7 @@ it('remove()', function () {
 
     pool.remove(function (v) { return v === 'C';}).should.be.eql(2);
 
-    _(0).range(7).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+    _().range(7).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
         B: 3
     });
@@ -135,7 +173,7 @@ it('remove() failed predicate returns undefined', function () {
 
     expect(pool.remove(function (v) { return v === 'D';})).to.eql(undefined);
 
-    _(0).range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+    _().range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
         B: 3,
         C: 2
