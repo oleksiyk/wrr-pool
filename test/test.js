@@ -133,6 +133,25 @@ it('update()', function () {
     });
 });
 
+it('update() should not reset internal state if weight hasnt changed', function () {
+    var pool = new WRRPool();
+
+    pool.add('A', 4);
+    pool.add('B', 3);
+    pool.add('C', 2);
+
+    // this is not a very good test, as the order of peers may change (if we sort it for example)
+    _().range(8).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+        A: 4,
+        B: 3,
+        C: 1
+    });
+
+    pool.update(function (v) { return v === 'C';}, 'C1', 2).should.be.eql(2);
+
+    pool.next().should.be.eql('C1');
+});
+
 it('update() failed predicate returns undefined', function () {
     var pool = new WRRPool();
 
