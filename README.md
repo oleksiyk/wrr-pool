@@ -15,9 +15,9 @@ var WRRPool = require('wrr-pool');
 
 var pool = new WRRPool();
 
-pool.add('A', 4);
-pool.add('B', 3);
-pool.add('C', 2);
+pool.add('A', 4); // pool.add({ host: '10.0.1.10', port: 8087}, 4)
+pool.add('B', 3); // pool.add({ host: '10.0.1.11', port: 8087}, 3)
+pool.add('C', 2); // pool.add({ host: '10.0.1.12', port: 8087}, 2)
 
 pool.next(); // A
 pool.next(); // A
