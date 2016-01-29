@@ -10,6 +10,8 @@ WRRPool is a Weighted Round Robin resource pool
 npm install wrr-pool
 ```
 
+#### Basic usage
+
 ```javascript
 var WRRPool = require('wrr-pool');
 
@@ -28,6 +30,53 @@ pool.next(); // C
 pool.next(); // A
 pool.next(); // B
 pool.next(); // C
+```
+
+#### Get resource and its weight
+
+```javascript
+var pool = new WRRPool();
+
+pool.add({ id: 1 }, 4);
+pool.add({ id: 2 }, 3);
+pool.add({ id: 3 }, 2);
+
+pool.get({ id: 2 }); // => { value: { id: 2 }, weight: 3 }
+```
+
+```javascript
+var pool = new WRRPool();
+
+pool.add({ id: 1 }, 4);
+pool.add({ id: 2 }, 3);
+pool.add({ id: 3 }, 2);
+
+pool.get(function (v){ return v.id === 2; }); // => { value: { id: 2 }, weight: 3 }
+```
+
+#### Update resource value and/or weight
+
+```javascript
+var pool = new WRRPool();
+
+pool.add('A', 4);
+pool.add('B', 3);
+pool.add('C', 2);
+
+// update value to 'B1' and weight to 4
+pool.update(function (v) { return v === 'B';}, 'B1', 4); // => returns index of updated element or undefined if not found
+```
+
+#### Remove resource from pool
+
+```javascript
+var pool = new WRRPool();
+
+pool.add('A', 4);
+pool.add('B', 3);
+pool.add('C', 2);
+
+pool.remove(function (v) { return v === 'C';});  // => returns index of removed element or undefined if not found
 ```
 
 ## License
