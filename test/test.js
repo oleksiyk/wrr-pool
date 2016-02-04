@@ -12,16 +12,19 @@ it('should return proper sequence', function () {
     pool.add('B', 3);
     pool.add('C', 2);
 
-    _().range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
-        A: 4,
-        B: 3,
-        C: 2
+    _().range(18).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+        A: 8,
+        B: 6,
+        C: 4
     });
 });
 
 it('next() should return null when no peers added', function () {
     var pool = new WRRPool();
 
+    expect(pool.next()).to.eql(null);
+    expect(pool.next()).to.eql(null);
+    expect(pool.next()).to.eql(null);
     expect(pool.next()).to.eql(null);
 });
 
@@ -73,6 +76,19 @@ it('weight < 0 effectively means weight=0', function () {
         A: 8,
         B: 6
     });
+});
+
+it('should return null when all peers have weight = 0', function () {
+    var pool = new WRRPool();
+
+    pool.add('A', 0);
+    pool.add('B', 0);
+    pool.add('C', 0);
+
+    expect(pool.next()).to.eql(null);
+    expect(pool.next()).to.eql(null);
+    expect(pool.next()).to.eql(null);
+    expect(pool.next()).to.eql(null);
 });
 
 it('get()', function () {
