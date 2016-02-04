@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/oleksiyk/wrr-pool.png)](https://travis-ci.org/oleksiyk/wrr-pool)
+[![Build Status](https://travis-ci.org/oleksiyk/wrr-pool.svg)](https://travis-ci.org/oleksiyk/wrr-pool)
+[![Dependencies](https://david-dm.org/oleksiyk/wrr-pool.svg)](https://david-dm.org/oleksiyk/wrr-pool)
+[![DevDependencies](https://david-dm.org/oleksiyk/wrr-pool/dev-status.svg)](https://david-dm.org/oleksiyk/wrr-pool#info=devDependencies)
 
 # WRRPool
 

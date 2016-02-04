@@ -6,17 +6,17 @@
         "name": "Oleksiy Krivoshey",
         "email": "oleksiyk@gmail.com"
     },
-    "version": "1.0.4",
+    "version": "1.0.5",
     "main": "./lib/index.js",
     "keywords": ["weighted", "roundrobin", "round", "robin"],
     "dependencies": {
         "lodash": "^4.0.1"
     },
     "devDependencies": {
-        "mocha": "~=2.3.4",
-        "chai": "~=3.4.1",
+        "mocha": "^2.4.5",
+        "chai": "^3.5.0",
         "eslint": "^1.10.3",
-        "eslint-config-airbnb": "^3.1.0",
+        "eslint-config-airbnb": "^5.0.0",
         "istanbul": "^0.4.2"
     },
     "bugs": {
