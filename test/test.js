@@ -198,3 +198,42 @@ it('remove() failed predicate returns undefined', function () {
         C: 2
     });
 });
+
+it('updateWeight()', function () {
+    var pool = new WRRPool();
+
+    pool.add('A', 4);
+    pool.add('B', 3);
+    pool.add('C', 2);
+
+    _().range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+        A: 4,
+        B: 3,
+        C: 2
+    });
+
+    pool.updateWeight(function (v) { return v === 'B';}, 4).should.be.eql(1);
+    pool.updateWeight(function (v) { return v === 'C';}, 4).should.be.eql(2);
+
+    _().range(12).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+        A: 4,
+        B: 4,
+        C: 4
+    });
+});
+
+it('updateWeight() failed predicate returns undefined', function () {
+    var pool = new WRRPool();
+
+    pool.add('A', 4);
+    pool.add('B', 3);
+    pool.add('C', 2);
+
+    expect(pool.updateWeight(function (v) { return v === 'D';}, 100)).to.eql(undefined);
+
+    _().range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
+        A: 4,
+        B: 3,
+        C: 2
+    });
+});
