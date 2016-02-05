@@ -12,6 +12,8 @@ it('should return proper sequence', function () {
     pool.add('B', 3);
     pool.add('C', 2);
 
+    pool.size().should.be.eql(3);
+
     _().range(18).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 8,
         B: 6,
@@ -193,6 +195,8 @@ it('remove()', function () {
 
     pool.remove(function (v) { return v === 'C';}).should.be.eql(2);
 
+    pool.size().should.be.eql(2);
+
     _().range(7).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
         B: 3
@@ -207,6 +211,8 @@ it('remove() failed predicate returns undefined', function () {
     pool.add('C', 2);
 
     expect(pool.remove(function (v) { return v === 'D';})).to.eql(undefined);
+
+    pool.size().should.be.eql(3);
 
     _().range(9).map(pool.next.bind(pool)).countBy().value().should.be.eql({
         A: 4,
