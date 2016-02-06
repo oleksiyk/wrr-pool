@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/oleksiyk/wrr-pool.svg)](https://travis-ci.org/oleksiyk/wrr-pool)
+[![Test Coverage](https://codeclimate.com/github/oleksiyk/wrr-pool/badges/coverage.svg)](https://codeclimate.com/github/oleksiyk/wrr-pool/coverage)
 [![Dependencies](https://david-dm.org/oleksiyk/wrr-pool.svg)](https://david-dm.org/oleksiyk/wrr-pool)
 [![DevDependencies](https://david-dm.org/oleksiyk/wrr-pool/dev-status.svg)](https://david-dm.org/oleksiyk/wrr-pool#info=devDependencies)
 
